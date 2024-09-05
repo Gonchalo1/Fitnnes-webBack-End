@@ -1,0 +1,9 @@
+//Se configura sequelize para que en vez de seguir su propia lógica, directamente se lo conecte con JS para ubicar los archivos que se usan para la migración.
+const path = require('path');
+
+module.exports = {
+  'models-path': path.resolve('models'),
+  'migrations-path': path.resolve('migrations'),
+  'seeders-path': path.resolve('seeders'), //Los seeders no estan hechos, esto lo tipeó chat gpt, porque obviamente no se van a hacer seeders de pagos, porque se supone que son reales, salvo que me digan que lo cambie.
+  'config': path.resolve('config', 'config.js')
+};
