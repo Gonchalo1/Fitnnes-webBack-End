@@ -1,22 +1,24 @@
-//Importaciones 
-const Pagos = require('../models/pagos');
-const axios = require('axios');
+import { Request, Response } from 'express';
+import Pagos from '../models/pagos'; // Verifica que esta ruta sea correcta
+import axios from 'axios';
 
 // Controlador para procesar un reembolso
-const refundPayment = async (req, res) => {
+const refundPayment = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params; // ID del pago a reembolsar
     const { amount } = req.body; // Monto del reembolso (opcional)
     const xIdempotencyKey = `refund-${id}-${Date.now()}`; // Llave idempotente para evitar duplicados
 
+    // Buscar el pago en la base de datos
     const pago = await Pagos.findOne({ where: { pedido_id: id } });
 
     if (!pago) {
-      return res.status(404).json({ error: 'Pago no encontrado' });
+      res.status(404).json({ error: 'Pago no encontrado' });
+      return;
     }
 
     // Crear el cuerpo de la solicitud de reembolso
-    const data = {};
+    const data: { amount?: number } = {};
     if (amount) {
       data.amount = amount;
     }
@@ -32,12 +34,13 @@ const refundPayment = async (req, res) => {
         },
       }
     );
-    //MANEJO DE ERRORES
+
+    // Enviar la respuesta
     res.status(200).json(response.data);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error al procesar el reembolso:', error.response?.data || error.message);
     res.status(500).json({ error: 'Error al procesar el reembolso' });
   }
 };
 
-module.exports = { refundPayment };
+export { refundPayment };

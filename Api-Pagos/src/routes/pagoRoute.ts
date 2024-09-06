@@ -1,7 +1,7 @@
-const express = require('express');
-const { payments, getPaymentById, getPaymentMethods } = require('../controller/pagoController');
+import express, { Router } from 'express';
+import { payments, getPaymentById, getPaymentMethods } from '../controller/pagoController';
 
-const router = express.Router();
+const router: Router = express.Router();
 
 // Ruta para crear un pago
 router.post('/payments', payments);
@@ -10,4 +10,4 @@ router.get('/payments/:id', getPaymentById);
 // Ruta para obtener métodos de pago disponibles
 router.get('/payments/methods', getPaymentMethods);
 
-module.exports = router;
+export default router;
