@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+
+# Archivos de configuración locales
+.env
+
+# Archivos generados por IDEs y editores de texto
+.vscode/
+.idea/
+
+# Archivos de registro y errores
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de compilación
+/build/
+.DS_Store
+
+# Otros archivos y directorios específicos de tu proyecto
